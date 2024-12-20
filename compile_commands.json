@@ -1,0 +1,19 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-Iinclude",
+      "-Ilib/assert/include",
+      "-Ilib/vector/include",
+      "-o",
+      "build/text_editor.o",
+      "src/text_editor.c"
+    ],
+    "directory": "/home/novak/code/text_editor",
+    "file": "/home/novak/code/text_editor/src/text_editor.c",
+    "output": "/home/novak/code/text_editor/build/text_editor.o"
+  }
+]

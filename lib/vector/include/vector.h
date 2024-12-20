@@ -27,4 +27,6 @@ int vec_append(struct Vector*, void* data);
 
 int vec_remove(struct Vector*, size_t pos);
 
+void* vec_at(struct Vector* vector, size_t pos);
+
 #endif
