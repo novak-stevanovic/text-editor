@@ -5,42 +5,35 @@
 /* Resizes Vector <vector> by performing alloc/realloc. Call to this function extends memory by _resize_count * <vector>->_element_size.
  * Return value:
  * on success: address of <vector>->head
- * on failure: NULL.
- */
+ * on failure: NULL. */
 void* _alloc_new_chunk(struct Vector* vector, size_t _resize_count);
 
 /* Calls _alloc_new_chunk() with parameters (<vector>, <vector>->_resize_count).
- * Return value: Same as _alloc_new_chunk().
- */
+ * Return value: Same as _alloc_new_chunk(). */
 void* _alloc_new_chunk_rsz(struct Vector* vector);
 
 /* Calculates <vector>'s tail.
- * Return value: Pointer to address of last element in Vector <vector>.
- */
+ * Return value: Pointer to address of last element in Vector <vector>. */
 void* _get_vector_tail(struct Vector* vector);
 
 /* Calculates position of element with starting address <start_addr> in Vector <vector>.
- * Return value: Index of calculated position.
- */
+ * Return value: Index of calculated position. */
 size_t _get_element_idx(struct Vector* vector, void* start_addr);
 
 /* Calculates starting address of element with index <idx> in Vector <vector>.
- * Return value: Pointer to calculated starting address.
- */
+ * Return value: Pointer to calculated starting address. */
 void* _get_element_addr(struct Vector* vector, size_t idx);
 
 /* Shift elements starting from index <start_idx> rightward by calling memmove().
  * Return value:
  * on success: 0
- * on failure: 1 - memmove() failed.
- */
+ * on failure: 1 - memmove() failed. */
 int _shift_right(struct Vector* vector, size_t start_idx);
 
 /* Shift elements starting from index <start_idx> leftward by calling memmove().
  * Return value:
  * on success: 0
- * on failure: 1 - memmove() failed.
- */
+ * on failure: 1 - memmove() failed. */
 int _shift_left(struct Vector* vector, size_t start_idx);
 
 void __print_int_vector_debug(struct Vector* v);
@@ -201,8 +194,6 @@ int _shift_right(struct Vector* vector, size_t start_idx)
 
     size_t step = vector->_element_size;
     size_t elements_shifted = vector_count - start_idx;
-
-    // 10 | 15 | 55 | 
 
     void* start_pos = _get_element_addr(vector, start_idx);
 
