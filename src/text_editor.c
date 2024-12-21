@@ -18,14 +18,6 @@ void show_file_content(FILE *f)
 {
 }
 
-void print_vector(struct Vector* v)
-{
-    for (size_t i = 0; i < v->count; i++) {
-        printf("%d, %p | ", *((int*)vec_at(v, i)), vec_at(v, i));
-    }
-    putchar('\n');
-}
-
 int main(int argc, char *argv[])
 {
     // FILE* f;
@@ -38,6 +30,24 @@ int main(int argc, char *argv[])
     // fclose(f);
     // tcsetattr(STDOUT_FILENO, TCSAFLUSH, &init_opts);
     // printf("Settings reverted.\n");
-    struct Vector* v1 = vec_init(100, sizeof(int));
+    // struct Vector* v1 = vec_init(1, 100, sizeof(int));
+    // print_vector(v1);
+    //
+    // int status;
+    //
+    // int n1 = 10;
+    // status = vec_append(v1, &n1);
+    // ASSERT(status == 0, "Failure to append.");
+    // print_vector(v1);
+    //
+    // int n2 = 15;
+    // status = vec_append(v1, &n2);
+    // ASSERT(status == 0, "Failure to append.");
+    // print_vector(v1);
+    //
+    // status = vec_remove(v1, 0);
+    // ASSERT(status == 0, "Failure to remove.");
+    // print_vector(v1);
+
     return EXIT_SUCCESS;
 }

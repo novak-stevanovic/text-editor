@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd lib/vector
+cd ../lib/vector
 make clean
 bear -- make
-cd ../..
+cd ../../script
