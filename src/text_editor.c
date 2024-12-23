@@ -15,9 +15,13 @@ void conf_term_opts()
 {
     struct termios init_opts_cpy = init_opts;
 
+    // cfmakeraw(&init_opts_cpy);
+
     init_opts_cpy.c_lflag &= ~(ICANON);
     // init_opts_cpy.c_iflag &= (IGNBRK);
     init_opts_cpy.c_lflag &= ~(ECHO);
+
+    setvbuf(stdout, NULL, _IONBF, 0);
 
     tcsetattr(STDOUT_FILENO, TCSAFLUSH, &init_opts_cpy);
 }
@@ -30,10 +34,6 @@ void load_init_opts()
 void reset_opts()
 {
     tcsetattr(STDOUT_FILENO, TCSAFLUSH, &init_opts);
-}
-
-void show_file_content(FILE *f)
-{
 }
 
 int main(int argc, char *argv[])
