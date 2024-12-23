@@ -1,16 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <termios.h>
 #include "vector.h"
 #include "assert.h"
+#include "ansi_op.h"
 
-void conf_term_opts(struct termios init_opts)
+size_t _itostr(int x, char* buffer);
+
+struct termios init_opts;
+
+void conf_term_opts()
 {
-    init_opts.c_lflag &= ~(ICANON);
-    // init_opts.c_iflag &= (IGNBRK);
-    init_opts.c_lflag &= ~(ECHO);
+    struct termios init_opts_cpy = init_opts;
 
+    init_opts_cpy.c_lflag &= ~(ICANON);
+    // init_opts_cpy.c_iflag &= (IGNBRK);
+    init_opts_cpy.c_lflag &= ~(ECHO);
+
+    tcsetattr(STDOUT_FILENO, TCSAFLUSH, &init_opts_cpy);
+}
+
+void load_init_opts()
+{
+    tcgetattr(STDOUT_FILENO, &init_opts);
+}
+
+void reset_opts()
+{
     tcsetattr(STDOUT_FILENO, TCSAFLUSH, &init_opts);
 }
 
@@ -20,34 +38,25 @@ void show_file_content(FILE *f)
 
 int main(int argc, char *argv[])
 {
-    // FILE* f;
-    // f = fopen("test.txt", "w");
-    // struct termios init_opts;
-    // tcgetattr(STDOUT_FILENO, &init_opts);
-    //
-    // conf_term_opts(init_opts);
-    //
-    // fclose(f);
-    // tcsetattr(STDOUT_FILENO, TCSAFLUSH, &init_opts);
-    // printf("Settings reverted.\n");
-    // struct Vector* v1 = vec_init(1, 100, sizeof(int));
-    // print_vector(v1);
-    //
-    // int status;
-    //
-    // int n1 = 10;
-    // status = vec_append(v1, &n1);
-    // ASSERT(status == 0, "Failure to append.");
-    // print_vector(v1);
-    //
-    // int n2 = 15;
-    // status = vec_append(v1, &n2);
-    // ASSERT(status == 0, "Failure to append.");
-    // print_vector(v1);
-    //
-    // status = vec_remove(v1, 0);
-    // ASSERT(status == 0, "Failure to remove.");
-    // print_vector(v1);
+    load_init_opts();
+
+    conf_term_opts();
+
+    char c;
+    while(1)
+    {
+        read(STDIN_FILENO, &c, 1);
+
+        if(c == 'q')
+            break;
+        else if(c == 'x')
+            rel_move_cursor_y(1);
+        else
+            write(STDOUT_FILENO, &c, 1);
+
+    }
+
+    reset_opts();
 
     return EXIT_SUCCESS;
 }

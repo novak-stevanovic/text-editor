@@ -6,7 +6,7 @@ CFLAGS = -Iinclude
 C_SRC = $(shell find src -name *.c)
 C_OBJ = $(patsubst src/%.c,build/%.o,$(C_SRC))
 
-AR_LIB = term_util
+AR_LIB = libtermutil.a
 
 $(AR_LIB): $(C_OBJ)
 	ar rcs $(AR_LIB) $(C_OBJ) 

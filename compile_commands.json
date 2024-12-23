@@ -6,14 +6,15 @@
       "-Wall",
       "-Wextra",
       "-Iinclude",
-      "-Ilib/assert/include",
       "-Ilib/vector/include",
+      "-Ilib/termutil/include",
+      "-Ilib/assert/include",
       "-o",
       "build/text_editor.o",
       "src/text_editor.c"
     ],
-    "directory": "/home/novak/code/text_editor",
-    "file": "/home/novak/code/text_editor/src/text_editor.c",
-    "output": "/home/novak/code/text_editor/build/text_editor.o"
+    "directory": "/home/novak/code/text-editor",
+    "file": "/home/novak/code/text-editor/src/text_editor.c",
+    "output": "/home/novak/code/text-editor/build/text_editor.o"
   }
 ]
