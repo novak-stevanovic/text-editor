@@ -7,7 +7,7 @@ C_OBJ = $(patsubst src/%.c,build/%.o,$(C_SRC))
 SO_LIB = libvector.so
 SO_FLAGS = -shared
 
-.PHONY: clean install
+.PHONY: clean install uninstall
 
 $(SO_LIB): $(C_OBJ)
 	$(CC) $(SO_FLAGS) $(C_OBJ) -o $(SO_LIB)
