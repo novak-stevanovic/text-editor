@@ -1,5 +1,5 @@
-#ifndef _ANSI_OP
-#define _ANSI_OP
+#ifndef _CURSOR_CONTROL
+#define _CURSOR_CONTROL
 
 #include <stddef.h>
 

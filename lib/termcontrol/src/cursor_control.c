@@ -1,6 +1,7 @@
-#include "ansi_op.h"
 #include <stdio.h>
 #include <string.h>
+#include "ansi.h"
+#include "cursor_control.h"
 
 void _form_ansi_code_basic(char* ansi_code, int parameter, char suffix);
 
@@ -14,7 +15,7 @@ void rel_move_cursor_y(int row_diff)
 {
     if(row_diff == 0) return;
 
-    char ansi_code[15] = "\e[";
+    char ansi_code[15] = _DEF_ANSI_SEQ_PREFIX;
 
     char suffix = (row_diff > 0 ? 'A' : 'B');
     
@@ -24,7 +25,20 @@ void rel_move_cursor_y(int row_diff)
 
 }
 
-void rel_move_cursor_x(int col_diff);
+void rel_move_cursor_x(int col_diff)
+{
+    if(col_diff == 0) return;
+
+    char ansi_code[15] = _DEF_ANSI_SEQ_PREFIX;
+
+    char suffix = (col_diff > 0 ? 'A' : 'B');
+    
+    _form_ansi_code_basic(ansi_code, col_diff, suffix);
+
+    printf("%s", ansi_code);
+
+
+}
 
 void abs_reset_cursor();
 void abs_move_cursor_x(int col_diff);

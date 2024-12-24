@@ -7,8 +7,8 @@
       "-Wextra",
       "-Iinclude",
       "-Ilib/vector/include",
-      "-Ilib/termutil/include",
       "-Ilib/assert/include",
+      "-Ilib/termcontrol/include",
       "-o",
       "build/text_editor.o",
       "src/text_editor.c"

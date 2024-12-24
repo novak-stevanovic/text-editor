@@ -5,7 +5,7 @@
 #include <termios.h>
 #include "vector.h"
 #include "assert.h"
-#include "ansi_op.h"
+#include "cursor_control.h"
 
 size_t _itostr(int x, char* buffer);
 
@@ -18,8 +18,15 @@ void conf_term_opts()
     // cfmakeraw(&init_opts_cpy);
 
     init_opts_cpy.c_lflag &= ~(ICANON);
-    // init_opts_cpy.c_iflag &= (IGNBRK);
     init_opts_cpy.c_lflag &= ~(ECHO);
+    init_opts_cpy.c_lflag &= ~(ISIG);
+    init_opts_cpy.c_lflag &= ~(ECHONL);
+
+    init_opts_cpy.c_iflag &= (IGNBRK);
+    init_opts_cpy.c_iflag &= (BRKINT);
+
+    init_opts_cpy.c_iflag &= (INLCR);
+    // init_opts_cpy.c_iflag &= (IGNCR);
 
     setvbuf(stdout, NULL, _IONBF, 0);
 
@@ -52,7 +59,7 @@ int main(int argc, char *argv[])
         else if(c == 'x')
             rel_move_cursor_y(1);
         else
-            write(STDOUT_FILENO, &c, 1);
+            printf("%c", c);
 
     }
 

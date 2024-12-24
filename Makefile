@@ -20,6 +20,7 @@ C_FLAGS = -Wall -Wextra -Iinclude $(C_LIB_OPTS)
 .PHONY: clean
 
 $(BIN): $(C_OBJ)
+	export LD_LIBRARY_PATH=lib/termcontrol:$(LD_LIBRARY_PATH)
 	gcc $(C_OBJ) $(C_FLAGS) -o $(BIN)
 
 $(C_OBJ): $(C_SRC) build
