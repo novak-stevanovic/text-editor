@@ -6,9 +6,9 @@
       "-Wall",
       "-Wextra",
       "-Iinclude",
-      "-Ilib/vector/include",
-      "-Ilib/assert/include",
       "-Ilib/termcontrol/include",
+      "-Ilib/assert/include",
+      "-Ilib/vector/include",
       "-o",
       "build/text_editor.o",
       "src/text_editor.c"

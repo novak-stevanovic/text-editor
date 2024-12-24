@@ -5,7 +5,7 @@ C_OBJ = $(patsubst src/%.c,build/%.o,$(C_SRC))
 
 C_LIB_INCLUDE = $(shell find lib -name include)
 
-.C_LIB_A_FILES = $(shell find lib -name *.a)
+.C_LIB_A_FILES = $(shell find lib -name *.a -o -name *.so)
 .C_LIB_A_BASENAME = $(notdir $(basename $(.C_LIB_A_FILES)))
 C_LIB_A = $(patsubst lib%,%,$(.C_LIB_A_BASENAME))
 
@@ -20,7 +20,7 @@ C_FLAGS = -Wall -Wextra -Iinclude $(C_LIB_OPTS)
 .PHONY: clean
 
 $(BIN): $(C_OBJ)
-	export LD_LIBRARY_PATH=lib/termcontrol:$(LD_LIBRARY_PATH)
+	export LD_LIBRARY_PATH=$(shell pwd)/lib/termcontrol:$(LD_LIBRARY_PATH)
 	gcc $(C_OBJ) $(C_FLAGS) -o $(BIN)
 
 $(C_OBJ): $(C_SRC) build

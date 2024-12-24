@@ -2,15 +2,15 @@
   {
     "arguments": [
       "/usr/bin/gcc",
-      "-c",
       "-Iinclude",
       "-fPIC",
+      "-c",
       "-o",
-      "libtermcontrol.so",
+      "build/cursor_control.o",
       "src/cursor_control.c"
     ],
     "directory": "/home/novak/code/text-editor/lib/termcontrol",
     "file": "/home/novak/code/text-editor/lib/termcontrol/src/cursor_control.c",
-    "output": "/home/novak/code/text-editor/lib/termcontrol/libtermcontrol.so"
+    "output": "/home/novak/code/text-editor/lib/termcontrol/build/cursor_control.o"
   }
 ]
