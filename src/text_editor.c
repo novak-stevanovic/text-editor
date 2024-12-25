@@ -45,6 +45,9 @@ void reset_opts()
 
 int main(int argc, char *argv[])
 {
+    struct Vector v1;
+    vec_at(&v1, 0);
+
     load_init_opts();
 
     conf_term_opts();

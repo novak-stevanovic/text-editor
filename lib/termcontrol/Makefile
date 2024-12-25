@@ -1,7 +1,7 @@
 .PHONY: build
 
 CC = gcc
-C_SRC_FLAGS = -Iinclude -c
+C_SRC_FLAGS = -Iinclude -c -Wall
 
 C_SRC = $(shell find src -name *.c)
 C_OBJ = $(patsubst src/%.c,build/%.o,$(C_SRC))

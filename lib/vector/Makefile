@@ -19,13 +19,13 @@ build:
 	mkdir -p build/
 
 install:
-	sudo cp libvector.so /usr/local/lib/
-	sudo mkdir -p /usr/local/include/vector
-	sudo cp -r include/* /usr/local/include/vector/
+	sudo cp libvector.so /usr/lib/
+	sudo mkdir -p /usr/include/vector
+	sudo cp -r include/* /usr/include/vector/
 
 uninstall:
-	sudo rm -f /usr/local/lib/libvector.so
-	sudo rm -rf /usr/local/include/vector/
+	sudo rm -f /usr/lib/libvector.so
+	sudo rm -rf /usr/include/vector/
 
 clean:
 	rm -rf build

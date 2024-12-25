@@ -3,8 +3,6 @@
 
 #define _DEF_ANSI_SEQ_PREFIX "\e["
 
-
-
 #endif
 
 
