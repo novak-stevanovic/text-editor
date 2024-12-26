@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "ansi.h"
-#include "cursor_control.h"
+#include "tc_cursor_control.h"
 
-void _form_ansi_code_basic(char* ansi_code, int parameter, char suffix);
-
-/* Converts given integer <x> to string. Converted value is placed in provided <buffer>. 
- * Return value: length of new string */
 size_t _itostr(int x, char* buffer);
 
 void rel_move_cursor(int row_diff, int col_diff);
@@ -15,29 +10,14 @@ void rel_move_cursor_y(int row_diff)
 {
     if(row_diff == 0) return;
 
-    char ansi_code[15] = _DEF_ANSI_SEQ_PREFIX;
-
-    char suffix = (row_diff > 0 ? 'A' : 'B');
-    
-    _form_ansi_code_basic(ansi_code, row_diff, suffix);
-
-    printf("%s", ansi_code);
-
+    // TO DO
 }
 
 void rel_move_cursor_x(int col_diff)
 {
     if(col_diff == 0) return;
 
-    char ansi_code[15] = _DEF_ANSI_SEQ_PREFIX;
-
-    char suffix = (col_diff > 0 ? 'A' : 'B');
-    
-    _form_ansi_code_basic(ansi_code, col_diff, suffix);
-
-    printf("%s", ansi_code);
-
-
+    // TO DO
 }
 
 void abs_reset_cursor();
@@ -84,17 +64,4 @@ size_t _itostr(int x, char* buffer)
     }
 
     return counter;
-}
-
-void _form_ansi_code_basic(char* ansi_code, int parameter, char suffix)
-{
-    char itostr_buf[10];
-    size_t itostr_buf_len = _itostr(parameter, itostr_buf);
-
-    strncat(ansi_code, itostr_buf, itostr_buf_len);
-
-    size_t ansi_code_len = strlen(ansi_code);
-
-    ansi_code[ansi_code_len] = suffix;
-    ansi_code[ansi_code_len + 1] = '\0';
 }

@@ -5,7 +5,7 @@
 #include <termios.h>
 #include "vector.h"
 #include "assert.h"
-#include "cursor_control.h"
+#include "tc_cursor_control.h"
 
 size_t _itostr(int x, char* buffer);
 

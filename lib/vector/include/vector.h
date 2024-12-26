@@ -32,8 +32,6 @@ struct Vector* vec_init_default(size_t _initial_count, size_t _element_size);
  * 2 - failure to perform memcpy() for calculated dest address and <data> src address.
  * 3 - failure to shift elements starting from index <pos> rightward. */
 int vec_insert(struct Vector* vector, void* data, size_t pos);
-a[12] = 2;
-adr(a[12]) = 1234;
 
 /* Appends data pointed at by <data> at the end of the Vector <vector>. Calls vec_insert() by specyfing <pos> as <vector>->count - 1.
  * May result in resizing of <vector>.
