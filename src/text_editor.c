@@ -59,8 +59,14 @@ int main(int argc, char *argv[])
 
         if(c == 'q')
             break;
-        else if(c == 'x')
+        else if(c == 'j')
             rel_move_cursor_y(1);
+        else if(c == 'k')
+            rel_move_cursor_y(-1);
+        else if(c == 'h')
+            rel_move_cursor_x(-1);
+        else if(c == 'l')
+            rel_move_cursor_x(1);
         else
             printf("%c", c);
 
