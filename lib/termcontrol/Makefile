@@ -11,7 +11,8 @@ A_LIB = libtermcontrol.a
 $(A_LIB): $(C_OBJ)
 	ar rcs $(A_LIB) $(C_OBJ)
 
-$(C_OBJ): $(C_SRC) build
+$(C_OBJ): build/%.o: src/%.c build
+	mkdir -p $(dir $@)
 	$(CC) $(C_SRC_FLAGS) $< -o $@
 
 build:

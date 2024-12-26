@@ -7,11 +7,11 @@
 
 struct Vector
 {
-    size_t count;
-    size_t _alloced_count;
-    size_t _resize_count;
-    size_t _element_size;
-    void* head;
+    size_t count; // current count of elements
+    size_t _alloced_count; // current array capacity
+    size_t _resize_count; // how much the array resizes on realloac
+    size_t _element_size; // size of 1 element
+    void* head; // ptr to array
 };
 
 /* Allocates memory for struct Vector, initializes struct fields. Allocates the memory for the first <_initial_count> elements of the array.
@@ -32,6 +32,8 @@ struct Vector* vec_init_default(size_t _initial_count, size_t _element_size);
  * 2 - failure to perform memcpy() for calculated dest address and <data> src address.
  * 3 - failure to shift elements starting from index <pos> rightward. */
 int vec_insert(struct Vector* vector, void* data, size_t pos);
+a[12] = 2;
+adr(a[12]) = 1234;
 
 /* Appends data pointed at by <data> at the end of the Vector <vector>. Calls vec_insert() by specyfing <pos> as <vector>->count - 1.
  * May result in resizing of <vector>.

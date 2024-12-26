@@ -13,7 +13,7 @@ DYN_LIB_INCLUDES = $(foreach dyn_lib,$(DYN_LIB),-Ilib/$(dyn_lib)/include)
 C_SRC = $(shell find src -name "*.c")
 C_OBJ = $(patsubst src/%.c,build/%.o,$(C_SRC))
 
-C_OBJ_FLAGS = $(STAT_LIB_INCLUDES) $(DYN_LIB_INCLUDES) $(L_FLAGS) $(l_FLAGS) -c
+C_OBJ_FLAGS = $(STAT_LIB_INCLUDES) $(DYN_LIB_INCLUDES) -c
 BIN_FLAGS = $(L_FLAGS) $(l_FLAGS)
 
 .PHONY: install uninstall clean make_lib clean_lib
@@ -28,7 +28,8 @@ make_lib:
 	@echo "[!] Making dynamic libs"
 	@$(foreach dyn_lib,$(DYN_LIB),cd lib/$(dyn_lib) && $(MAKE))
 
-$(C_OBJ): $(C_SRC) build
+$(C_OBJ): build/%.o: src/%.c build
+	mkdir -p $(dir $@)
 	@echo "[!] Making object files from src"
 	$(CC) $< -o $@ $(C_OBJ_FLAGS)
 

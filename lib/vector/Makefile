@@ -12,7 +12,8 @@ SO_FLAGS = -shared
 $(SO_LIB): $(C_OBJ)
 	$(CC) $(SO_FLAGS) $(C_OBJ) -o $(SO_LIB)
 
-$(C_OBJ): $(C_SRC) build
+$(C_OBJ): build/%.o: src/%.c build
+	mkdir -p $(dir $@)
 	$(CC) $(C_OBJ_FLAGS) $< -o $@
 
 build:
