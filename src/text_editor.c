@@ -88,7 +88,6 @@ int main(int argc, char *argv[])
             {
                 tc_rel_move_cursor_x(-1);
                 tc_erase();
-                tc_rel_move_cursor_x(-1);
             }
             else if(c == 27)
                 mode = 'n';

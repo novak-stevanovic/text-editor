@@ -1,9 +1,11 @@
 #include "tc_erase.h"
+#include "tc_cursor.h"
 #include <stdio.h>
 
 void tc_erase()
 {
     printf("%c", ' ');
+    tc_rel_move_cursor_x(-1);
 }
 
 void tc_erase_screen()
