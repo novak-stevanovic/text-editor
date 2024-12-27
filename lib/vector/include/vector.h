@@ -14,15 +14,17 @@ struct Vector
     void* head; // ptr to array
 };
 
-/* Allocates memory for struct Vector, initializes struct fields. Allocates the memory for the first <_initial_count> elements of the array.
- * Return value: 
- * on success: Pointer to allocated struct Vector.
- * on failure: NULL. */
-struct Vector* vec_init(size_t _initial_count, size_t _resize_count, size_t _element_size);
+/* Allocates memory for struct Vector <vector>, initializes struct fields. Allocates the memory for the first <_initial_count> elements of the array. 
+ * Return value:
+ * on success: 0
+ * on failure: 1 - allocing first chunk for array failed */
+int vec_init(struct Vector* vector, size_t _initial_count, size_t _resize_count, size_t _element_size);
 
-/* Calls vec_init with parameter <_resize_count> set to DEFAULT_RESIZE_COUNT.
- */
-struct Vector* vec_init_default(size_t _initial_count, size_t _element_size);
+/* Calls vec_init with parameter <_resize_count> set to DEFAULT_RESIZE_COUNT. 
+ * Return value:
+ * on success: 0
+ * on failure: 1 - allocing first chunk for array failed */
+int vec_init_default(struct Vector* vector, size_t _initial_count, size_t _element_size);
 
 /* Inserts element pointed at by <data> at index <pos> in the Vector <vector>. May result in resizing of <vector>.
  * Return value:

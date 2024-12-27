@@ -40,31 +40,28 @@ void __print_int_vector_debug(struct Vector* v);
 
 // --------------------------------------------------------------------------------------------
 
-struct Vector* vec_init(size_t _initial_count, size_t _resize_count, size_t _element_size)
+int vec_init(struct Vector* vector, size_t _initial_count, size_t _resize_count, size_t _element_size)
 {
+    ASSERT_NON_NULL_ARG(vector, 'vector');
     ASSERT(_initial_count != 0, "Invalid '_initial_count' parameter");
     ASSERT(_resize_count != 0, "Invalid '_resize_count' parameter");
     ASSERT(_element_size != 0, "Invalid '_element_size' parameter");
 
-    struct Vector* new = (struct Vector*)malloc(sizeof(struct Vector));
+    vector->_element_size = _element_size;
+    vector->_resize_count = _resize_count;
 
-    if(new == NULL) return NULL;
+    vector->head = NULL;
+    vector->count = 0;
+    vector->_alloced_count = 0;
 
-    new->_element_size = _element_size;
-    new->_resize_count = _resize_count;
+    if (_alloc_new_chunk(vector, _initial_count) == NULL) return 1;
 
-    new->head = NULL;
-    new->count = 0;
-    new->_alloced_count = 0;
-
-    if (_alloc_new_chunk(new, _initial_count) == NULL) return NULL;
-
-    return new;
+    return 0;
 }
 
-struct Vector* vec_init_default(size_t _initial_count, size_t _element_size)
+int vec_init_default(struct Vector* vector, size_t _initial_count, size_t _element_size)
 {
-    return vec_init(_initial_count, DEFAULT_RESIZE_COUNT, _element_size);
+    return vec_init(vector, _initial_count, DEFAULT_RESIZE_COUNT, _element_size);
 }
 
 int vec_insert(struct Vector* vector, void* data, size_t pos)
@@ -220,7 +217,7 @@ int _shift_left(struct Vector* vector, size_t start_idx)
 
 void __print_int_vector_debug(struct Vector* v)
 {
-    printf("vector tail: %p, count: %d, alloced_count: %d, resize_count: %d, vector_head: %p\n", _get_vector_tail(v), v->count, v->_alloced_count, v->_resize_count, v->head);
+    printf("vector tail: %p, count: %ld, alloced_count: %ld, resize_count: %ld, vector_head: %p\n", _get_vector_tail(v), v->count, v->_alloced_count, v->_resize_count, v->head);
 
     for (size_t i = 0; i < v->count; i++) {
         void* el_addr = vec_at(v, i);

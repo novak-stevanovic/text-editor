@@ -8,9 +8,9 @@
 #include "assert.h"
 #include "tc_cursor.h"
 
-size_t _itostr(int x, char* buffer);
-
 struct termios init_opts;
+
+struct Vector file_content;
 
 void conf_term_opts()
 {
@@ -26,7 +26,7 @@ void conf_term_opts()
     init_opts_cpy.c_iflag &= (IGNBRK);
     init_opts_cpy.c_iflag &= (BRKINT);
 
-    init_opts_cpy.c_iflag &= (INLCR);
+    // init_opts_cpy.c_iflag &= (INLCR);
     // init_opts_cpy.c_iflag &= (IGNCR);
 
     setvbuf(stdout, NULL, _IONBF, 0);
@@ -46,13 +46,44 @@ void reset_opts()
 
 int main(int argc, char *argv[])
 {
+    vec_init(&file_content, 10, 10, sizeof(struct Vector));
     struct Vector v1;
-    vec_at(&v1, 0);
+    vec_init(&v1, 30, 30, sizeof(char));
+    vec_append(&file_content, &v1);
 
     load_init_opts();
 
     conf_term_opts();
 
+    FILE *f = fopen("/home/novak/Desktop/text_editor.c", "r");
+
+    char c1;
+    while((c1 = getc(f)) != EOF)
+    {
+        if(c1 == '\n')
+        {
+            struct Vector v1;
+            vec_init(&v1, 30, 30, sizeof(char));
+            vec_append(&file_content, &v1);
+        }
+        else
+        {
+            struct Vector* last_line_vec = (struct Vector*)vec_at(&file_content, file_content.count - 1);
+            vec_append(last_line_vec, &c1);
+        }
+    }
+
+    // printf("\n\nFILE CONTENT:");
+    // int i, j;
+    // for(i = 0; i < file_content.count; i++)
+    // {
+    //     struct Vector* curr_vec = ((struct Vector*)vec_at(&file_content, i));
+    //     for(j = 0; j < curr_vec->count; j++)
+    //     {
+    //         printf("%c", vec_at(curr_vec, j));
+    //     }
+    // }
+    //
     char c;
     char mode = 'n';
     while(1)
