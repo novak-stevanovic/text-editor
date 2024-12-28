@@ -77,6 +77,7 @@ int vec_insert(struct Vector* vector, void* data, size_t pos)
     if(pos < vector->count)
         if(_shift_right(vector, pos) != 0) return 3;
 
+
     int memcpy_status = (memcpy(ptr_to_pos, data, vector->_element_size) == NULL);
     if(memcpy_status != 0) return 2;
 
@@ -127,6 +128,32 @@ int vec_remove(struct Vector* vector, size_t pos)
 void* vec_at(struct Vector* vector, size_t pos)
 {
     return _get_element_addr(vector, pos);
+}
+
+
+void vec_assign_by_pos(struct Vector* vector, size_t pos, void* data)
+{
+    ASSERT_NON_NULL_ARG(vector, "vector");
+    ASSERT_NON_NULL_ARG(data, "data");
+    ASSERT(pos < vector->count, "Invalid pos argument.");
+
+    void* element = _get_element_addr(vector, pos);
+
+    memcpy(element, data, vector->_element_size);
+
+}
+
+void vec_destruct(struct Vector* vector)
+{
+    ASSERT_NON_NULL_ARG(vector, "vector");
+
+    free(vector->head);
+
+    vector->head = NULL;
+    vector->count = 0;
+    vector->_element_size = 0;
+    vector->_resize_count = 0;
+    vector->_alloced_count = 0;
 }
 
 void* _alloc_new_chunk(struct Vector* vector, size_t _resize_count)

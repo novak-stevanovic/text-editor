@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <sys/ioctl.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <termios.h>
+#include "tc_display.h"
 #include "tc_erase.h"
 #include "vector.h"
 #include "assert.h"
@@ -46,49 +48,53 @@ void reset_opts()
 
 int main(int argc, char *argv[])
 {
+    _tc_cursor_init();
+    _tc_display_init();
+
     vec_init(&file_content, 10, 10, sizeof(struct Vector));
     struct Vector v1;
     vec_init(&v1, 30, 30, sizeof(char));
     vec_append(&file_content, &v1);
+    // printf("AAAA: %p %p\n", last_line_vec, file_content.head);
+    // printf("%lp %ld %ld %ld %ld", file_content.head, last_line_vec->_alloced_count, last_line_vec->count, last_line_vec->_resize_count, last_line_vec->_element_size);
 
     load_init_opts();
 
     conf_term_opts();
 
-    FILE *f = fopen("/home/novak/Desktop/text_editor.c", "r");
+    FILE *f = fopen("/home/novak/Desktop/Makefile", "r");
 
     char c1;
+    int flag = 0;
     while((c1 = getc(f)) != EOF)
     {
+        // printf("Processing char: %c\n", c1);
+        struct Vector* last_line_vec = (struct Vector*)vec_at(&file_content, file_content.count - 1);
+        vec_append(last_line_vec, &c1);
         if(c1 == '\n')
         {
             struct Vector v1;
             vec_init(&v1, 30, 30, sizeof(char));
             vec_append(&file_content, &v1);
         }
-        else
+    }
+
+    printf("\n\nFILE CONTENT:");
+    int i, j;
+    for(i = 0; i < file_content.count; i++)
+    {
+        struct Vector* curr_vec = ((struct Vector*)vec_at(&file_content, i));
+        for(j = 0; j < curr_vec->count; j++)
         {
-            struct Vector* last_line_vec = (struct Vector*)vec_at(&file_content, file_content.count - 1);
-            vec_append(last_line_vec, &c1);
+            printf("%c", *((char*)curr_vec->head + j));
         }
     }
 
-    // printf("\n\nFILE CONTENT:");
-    // int i, j;
-    // for(i = 0; i < file_content.count; i++)
-    // {
-    //     struct Vector* curr_vec = ((struct Vector*)vec_at(&file_content, i));
-    //     for(j = 0; j < curr_vec->count; j++)
-    //     {
-    //         printf("%c", vec_at(curr_vec, j));
-    //     }
-    // }
-    //
     char c;
     char mode = 'n';
     while(1)
     {
-        read(STDIN_FILENO, &c, 1);
+        c = getc(stdin);
 
         if(mode == 'n')
         {
@@ -112,6 +118,12 @@ int main(int argc, char *argv[])
                 tc_erase_screen();
             else if(c == 'b')
                 tc_erase_line_cursor_to_end();
+            else if(c == 'g')
+                tc_abs_reset_cursor();
+            else if(c == 'w')
+            {
+                // printf("cursor%ld %ld", tc_get_cursor_x(), tc_get_cursor_y());
+            }
         }
         else
         {

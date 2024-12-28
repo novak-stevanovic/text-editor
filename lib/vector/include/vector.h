@@ -57,4 +57,10 @@ int vec_remove(struct Vector* vector, size_t pos);
  * Address of element with index <pos>. */
 void* vec_at(struct Vector* vector, size_t pos);
 
+/* Assigns data <data> to element in array with index <pos>. Replaces assignment operator '=' */
+void vec_assign_by_pos(struct Vector* vector, size_t pos, void* data);
+
+/* Frees dynamically allocated memory */
+void vec_destruct(struct Vector* vector);
+
 #endif
