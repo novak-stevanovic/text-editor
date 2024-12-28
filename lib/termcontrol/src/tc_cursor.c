@@ -4,7 +4,7 @@
 #include "tc_display.h"
 
 size_t _min(size_t x, size_t y);
-size_t _flatten(size_t min, size_t suggested, size_t max);
+size_t _flatten(int min, int suggested, int max);
 
 // ------------------------------------------------------------------------------------
 
@@ -38,6 +38,15 @@ void tc_set_cursor_pos(int x, int y)
 
     cursor.x = _flatten(0, x, display_width - 1);
     cursor.y = _flatten(0, y, display_height - 1);
+}
+
+void tc_update_cursor_pos()
+{
+    size_t display_width = tc_get_display_width();
+    size_t display_height = tc_get_display_height();
+
+    cursor.x = _flatten(0, cursor.x, display_width - 1);
+    cursor.y = _flatten(0, cursor.y, display_height - 1);
 }
 
 void tc_rel_move_cursor(int row_diff, int col_diff)
@@ -122,7 +131,7 @@ size_t _min(size_t x, size_t y)
     return (x < y ? x : y);
 }
 
-size_t _flatten(size_t min, size_t val, size_t max)
+size_t _flatten(int min, int val, int max)
 {
     if(val < min)
         return min;

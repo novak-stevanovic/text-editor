@@ -5,9 +5,10 @@
 #include <unistd.h>
 
 #include "tc_display.h"
+#include "tc_cursor.h"
 #include "assert.h"
 
-void _set_win_size();
+void _update_display_info();
 void _update_display_handler(int sig);
 
 // ----------------------------------------------------------------------------
@@ -28,7 +29,7 @@ void _tc_display_init()
 
     ASSERT(status == 0, "Failure to set handler.");
 
-    _set_win_size();
+    _update_display_info();
 }
 
 size_t tc_get_display_height()
@@ -43,10 +44,10 @@ size_t tc_get_display_width()
 
 void _update_display_handler(int sig)
 {
-    _set_win_size();
+    _update_display_info();
 }
 
-void _set_win_size()
+void _update_display_info()
 {
     struct winsize win_size;
 
@@ -56,4 +57,6 @@ void _set_win_size()
 
     display_info.height = win_size.ws_row;
     display_info.width = win_size.ws_col;
+
+    tc_update_cursor_pos();
 }

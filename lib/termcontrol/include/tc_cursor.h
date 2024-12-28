@@ -20,6 +20,7 @@ void _tc_cursor_init();
 
 size_t tc_get_cursor_x();
 size_t tc_get_cursor_y();
+void tc_update_cursor_pos();
 void tc_set_cursor_pos(int x, int y);
 
 void tc_rel_move_cursor(int row_diff, int col_diff);

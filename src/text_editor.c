@@ -55,14 +55,12 @@ int main(int argc, char *argv[])
     struct Vector v1;
     vec_init(&v1, 30, 30, sizeof(char));
     vec_append(&file_content, &v1);
-    // printf("AAAA: %p %p\n", last_line_vec, file_content.head);
-    // printf("%lp %ld %ld %ld %ld", file_content.head, last_line_vec->_alloced_count, last_line_vec->count, last_line_vec->_resize_count, last_line_vec->_element_size);
 
     load_init_opts();
 
     conf_term_opts();
 
-    FILE *f = fopen("/home/novak/Desktop/Makefile", "r");
+    FILE *f = fopen("/home/novak/Desktop/test.txt", "r");
 
     char c1;
     int flag = 0;
@@ -90,8 +88,14 @@ int main(int argc, char *argv[])
         }
     }
 
+    FILE *f1 = fopen("/home/novak/track.txt", "w");
+    tc_erase_screen();
+    tc_abs_reset_cursor();
+
     char c;
     char mode = 'n';
+    fprintf(f1, "%ld %ld\n", tc_get_cursor_x(), tc_get_cursor_y());
+    fflush(f1);
     while(1)
     {
         c = getc(stdin);
@@ -120,10 +124,8 @@ int main(int argc, char *argv[])
                 tc_erase_line_cursor_to_end();
             else if(c == 'g')
                 tc_abs_reset_cursor();
-            else if(c == 'w')
-            {
-                // printf("cursor%ld %ld", tc_get_cursor_x(), tc_get_cursor_y());
-            }
+            fprintf(f1, "%ld %ld\n", tc_get_cursor_x(), tc_get_cursor_y());
+            fflush(f1);
         }
         else
         {
@@ -141,6 +143,8 @@ int main(int argc, char *argv[])
     }
 
     reset_opts();
+    fclose(f);
+    fclose(f1);
 
     return EXIT_SUCCESS;
 }
