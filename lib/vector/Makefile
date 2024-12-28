@@ -1,6 +1,8 @@
 CC = gcc
 C_OBJ_FLAGS = -c -Iinclude -Wall -fPIC
 
+INSTALL_PREFIX = /usr/local
+
 C_SRC = $(wildcard src/*.c)
 C_OBJ = $(patsubst src/%.c,build/%.o,$(C_SRC))
 
@@ -20,13 +22,13 @@ build:
 	mkdir -p build/
 
 install:
-	sudo cp libvector.so /usr/lib/
-	sudo mkdir -p /usr/include/vector
-	sudo cp -r include/* /usr/include/vector/
+	sudo cp libvector.so $(INSTALL_PREFIX)/lib
+	sudo mkdir -p $(INSTALL_PREFIX)/include/vector
+	sudo cp -r include/* $(INSTALL_PREFIX)/include/vector/
 
 uninstall:
-	sudo rm -f /usr/lib/libvector.so
-	sudo rm -rf /usr/include/vector/
+	sudo rm -f $(INSTALL_PREFIX)/lib/libvector.so
+	sudo rm -rf $(INSTALL_PREFIX)/include/vector/
 
 clean:
 	rm -rf build

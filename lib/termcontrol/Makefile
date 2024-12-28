@@ -3,6 +3,8 @@
 CC = gcc
 C_SRC_FLAGS = -Iinclude -c -Wall
 
+INSTALL_PREFIX = /usr/local
+
 C_SRC = $(shell find src -name *.c)
 C_OBJ = $(patsubst src/%.c,build/%.o,$(C_SRC))
 
@@ -17,6 +19,15 @@ $(C_OBJ): build/%.o: src/%.c build
 
 build:
 	mkdir -p build/
+
+install:
+	sudo mkdir -p $(INSTALL_PREFIX)/include/termcontrol
+	sudo cp -r include/* $(INSTALL_PREFIX)/include/termcontrol
+	sudo cp $(A_LIB) $(INSTALL_PREFIX)/lib
+
+uninstall:
+	sudo rm -rf $(INSTALL_PREFIX)/include/termcontrol
+	sudo rm -f $(INSTALL_PREFIX)/lib/$(A_LIB)
 
 clean:
 	rm -rf build

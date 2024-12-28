@@ -1,7 +1,7 @@
 CC = gcc
-MAKE = make
 
 BIN = text_editor
+INSTALL_PREFIX = /usr/local
 
 STAT_LIB = termcontrol
 DYN_LIB = vector
@@ -14,7 +14,7 @@ C_SRC = $(shell find src -name "*.c")
 C_OBJ = $(patsubst src/%.c,build/%.o,$(C_SRC))
 
 C_OBJ_FLAGS = $(STAT_LIB_INCLUDES) $(DYN_LIB_INCLUDES) -c
-BIN_FLAGS = $(L_FLAGS) $(l_FLAGS)
+BIN_FLAGS = $(L_FLAGS) $(l_FLAGS) $(foreach dyn_lib,$(DYN_LIB),-Wl,-rpath,lib/$(dyn_lib))
 
 .PHONY: install uninstall clean make_lib clean_lib
 
@@ -24,9 +24,9 @@ $(BIN): make_lib $(C_OBJ)
 
 make_lib:
 	@echo "[!] Making static libs"
-	@$(foreach stat_lib,$(STAT_LIB),cd lib/$(stat_lib) && $(MAKE))
+	@$(foreach stat_lib,$(STAT_LIB),cd lib/$(stat_lib) && make)
 	@echo "[!] Making dynamic libs"
-	@$(foreach dyn_lib,$(DYN_LIB),cd lib/$(dyn_lib) && $(MAKE))
+	@$(foreach dyn_lib,$(DYN_LIB),cd lib/$(dyn_lib) && make)
 
 $(C_OBJ): build/%.o: src/%.c build
 	mkdir -p $(dir $@)
@@ -47,18 +47,24 @@ clean_lib:
 	@echo "[!] Cleaning dynamic libs"
 	@$(foreach dyn_lib,$(DYN_LIB),cd lib/$(dyn_lib) && make clean)
 
+# ---------------------------------------------------------------------------------------------------
+
 install:
 	@echo "[!] Installing"
-	sudo cp $(BIN) /usr/bin/
+	sudo cp $(BIN) $(INSTALL_PREFIX)/bin
 	@echo "[!] Installing dynamic libs"
 	@$(foreach dyn_lib,$(DYN_LIB),cd lib/$(dyn_lib) && make install)
-
+	@echo "[!] Installing static libs"
+	@$(foreach stat_lib,$(STAT_LIB),cd lib/$(stat_lib) && make install)
+	sudo ldconfig
 
 uninstall: uninstall_lib
-	sudo rm -f /usr/bin/$(BIN)
+	sudo rm -f $(INSTALL_PREFIX)/$(BIN)
 	@echo "[!] Uninstalling"
 
 uninstall_lib:
 	@echo "[!] Uninstalling dynamic libs"
 	@$(foreach dyn_lib,$(DYN_LIB),cd lib/$(dyn_lib) && make uninstall)
+	@echo "[!] Uninstalling static libs"
+	@$(foreach stat_lib,$(STAT_LIB),cd lib/$(stat_lib) && make uninstall)
 
