@@ -10,7 +10,10 @@ struct DisplayInfo;
 extern struct DisplayInfo display_info;
 
 void _tc_display_init();
-size_t tc_get_display_height();
-size_t tc_get_display_width();
+size_t tc_display_get_display_height();
+size_t tc_display_get_display_width();
+
+size_t tc_display_get_tab_height();
+size_t tc_display_get_tab_width();
 
 #endif

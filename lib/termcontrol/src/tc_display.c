@@ -7,6 +7,7 @@
 #include "tc_display.h"
 #include "tc_cursor.h"
 #include "assert.h"
+#include "misc.h"
 
 void _update_display_info();
 void _update_display_handler(int sig);
@@ -15,7 +16,7 @@ void _update_display_handler(int sig);
 
 struct DisplayInfo
 {
-    size_t height, width;
+    struct Point2D dimensions;
 };
 
 struct DisplayInfo display_info;
@@ -34,12 +35,12 @@ void _tc_display_init()
 
 size_t tc_get_display_height()
 {
-    return display_info.height;
+    return display_info.dimensions.y;
 }
 
 size_t tc_get_display_width()
 {
-    return display_info.width;
+    return display_info.dimensions.x;
 }
 
 void _update_display_handler(int sig)
@@ -55,8 +56,8 @@ void _update_display_info()
 
     ASSERT(status == 0, "Failure to get window size.");
 
-    display_info.height = win_size.ws_row;
-    display_info.width = win_size.ws_col;
+    display_info.dimensions.y = win_size.ws_row;
+    display_info.dimensions.x = win_size.ws_col;
 
-    tc_update_cursor_pos();
+    tc_cursor_fix_pos();
 }

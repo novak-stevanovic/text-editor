@@ -1,7 +1,6 @@
-#ifndef _TC_GRAPHICS_H
-#define _TC_GRAPHICS_H
+#ifndef _TC_STYLE_PRIMS_H
+#define _TC_STYLE_PRIMS_H
 
-// Colors / Graphics Mode
 #define _GRAPHICS_SET_GRAPHICS_MODE_CODE "\e[%dm"
 #define _GRAPHICS_RESET_MODE_CODE "\e[0m"
 
